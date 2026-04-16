@@ -93,7 +93,7 @@ prop_no_emparejada -> if expr then prop
 
 Esta solución asegura que el `else` se asocie al `if` más cercano.
 
----
+
 
 ## Punto 4: Parser CYK
 
@@ -108,7 +108,8 @@ Ejemplo de prueba:
 
 El algoritmo construye una tabla donde se almacenan los posibles símbolos generadores de cada subcadena.
 
----
+<img width="1291" height="243" alt="image" src="https://github.com/user-attachments/assets/94d15c99-4ea7-46a0-9d15-c7cc0ab4396c" />
+
 
 ## Punto 5: Parser descendente recursivo
 
