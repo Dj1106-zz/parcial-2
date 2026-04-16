@@ -1,0 +1,428 @@
+Grammar
+
+    0 $accept: programa $end
+
+    1 programa: instruccion
+    2         | programa ';' instruccion
+
+    3 instruccion: create
+    4            | read
+    5            | update
+    6            | delete
+
+    7 create: CREATE ID '{' pares '}'
+
+    8 read: READ ID
+    9     | READ ID WHERE condicion
+
+   10 update: UPDATE ID SET pares
+   11       | UPDATE ID SET pares WHERE condicion
+
+   12 delete: DELETE ID
+   13       | DELETE ID WHERE condicion
+
+   14 pares: par
+   15      | pares ',' par
+
+   16 par: ID ':' valor
+
+   17 condicion: ID '=' valor
+
+   18 valor: STRING
+   19      | NUMBER
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    ',' (44) 15
+    ':' (58) 16
+    ';' (59) 2
+    '=' (61) 17
+    '{' (123) 7
+    '}' (125) 7
+    error (256)
+    CREATE (258) 7
+    READ (259) 8 9
+    UPDATE (260) 10 11
+    DELETE (261) 12 13
+    WHERE (262) 9 11 13
+    SET (263) 10 11
+    ID (264) 7 8 9 10 11 12 13 16 17
+    STRING (265) 18
+    NUMBER (266) 19
+
+
+Nonterminals, with rules where they appear
+
+    $accept (18)
+        on left: 0
+    programa (19)
+        on left: 1 2
+        on right: 0 2
+    instruccion (20)
+        on left: 3 4 5 6
+        on right: 1 2
+    create (21)
+        on left: 7
+        on right: 3
+    read (22)
+        on left: 8 9
+        on right: 4
+    update (23)
+        on left: 10 11
+        on right: 5
+    delete (24)
+        on left: 12 13
+        on right: 6
+    pares (25)
+        on left: 14 15
+        on right: 7 10 11 15
+    par (26)
+        on left: 16
+        on right: 14 15
+    condicion (27)
+        on left: 17
+        on right: 9 11 13
+    valor (28)
+        on left: 18 19
+        on right: 16 17
+
+
+State 0
+
+    0 $accept: • programa $end
+
+    CREATE  shift, and go to state 1
+    READ    shift, and go to state 2
+    UPDATE  shift, and go to state 3
+    DELETE  shift, and go to state 4
+
+    programa     go to state 5
+    instruccion  go to state 6
+    create       go to state 7
+    read         go to state 8
+    update       go to state 9
+    delete       go to state 10
+
+
+State 1
+
+    7 create: CREATE • ID '{' pares '}'
+
+    ID  shift, and go to state 11
+
+
+State 2
+
+    8 read: READ • ID
+    9     | READ • ID WHERE condicion
+
+    ID  shift, and go to state 12
+
+
+State 3
+
+   10 update: UPDATE • ID SET pares
+   11       | UPDATE • ID SET pares WHERE condicion
+
+    ID  shift, and go to state 13
+
+
+State 4
+
+   12 delete: DELETE • ID
+   13       | DELETE • ID WHERE condicion
+
+    ID  shift, and go to state 14
+
+
+State 5
+
+    0 $accept: programa • $end
+    2 programa: programa • ';' instruccion
+
+    $end  shift, and go to state 15
+    ';'   shift, and go to state 16
+
+
+State 6
+
+    1 programa: instruccion •
+
+    $default  reduce using rule 1 (programa)
+
+
+State 7
+
+    3 instruccion: create •
+
+    $default  reduce using rule 3 (instruccion)
+
+
+State 8
+
+    4 instruccion: read •
+
+    $default  reduce using rule 4 (instruccion)
+
+
+State 9
+
+    5 instruccion: update •
+
+    $default  reduce using rule 5 (instruccion)
+
+
+State 10
+
+    6 instruccion: delete •
+
+    $default  reduce using rule 6 (instruccion)
+
+
+State 11
+
+    7 create: CREATE ID • '{' pares '}'
+
+    '{'  shift, and go to state 17
+
+
+State 12
+
+    8 read: READ ID •
+    9     | READ ID • WHERE condicion
+
+    WHERE  shift, and go to state 18
+
+    $default  reduce using rule 8 (read)
+
+
+State 13
+
+   10 update: UPDATE ID • SET pares
+   11       | UPDATE ID • SET pares WHERE condicion
+
+    SET  shift, and go to state 19
+
+
+State 14
+
+   12 delete: DELETE ID •
+   13       | DELETE ID • WHERE condicion
+
+    WHERE  shift, and go to state 20
+
+    $default  reduce using rule 12 (delete)
+
+
+State 15
+
+    0 $accept: programa $end •
+
+    $default  accept
+
+
+State 16
+
+    2 programa: programa ';' • instruccion
+
+    CREATE  shift, and go to state 1
+    READ    shift, and go to state 2
+    UPDATE  shift, and go to state 3
+    DELETE  shift, and go to state 4
+
+    instruccion  go to state 21
+    create       go to state 7
+    read         go to state 8
+    update       go to state 9
+    delete       go to state 10
+
+
+State 17
+
+    7 create: CREATE ID '{' • pares '}'
+
+    ID  shift, and go to state 22
+
+    pares  go to state 23
+    par    go to state 24
+
+
+State 18
+
+    9 read: READ ID WHERE • condicion
+
+    ID  shift, and go to state 25
+
+    condicion  go to state 26
+
+
+State 19
+
+   10 update: UPDATE ID SET • pares
+   11       | UPDATE ID SET • pares WHERE condicion
+
+    ID  shift, and go to state 22
+
+    pares  go to state 27
+    par    go to state 24
+
+
+State 20
+
+   13 delete: DELETE ID WHERE • condicion
+
+    ID  shift, and go to state 25
+
+    condicion  go to state 28
+
+
+State 21
+
+    2 programa: programa ';' instruccion •
+
+    $default  reduce using rule 2 (programa)
+
+
+State 22
+
+   16 par: ID • ':' valor
+
+    ':'  shift, and go to state 29
+
+
+State 23
+
+    7 create: CREATE ID '{' pares • '}'
+   15 pares: pares • ',' par
+
+    '}'  shift, and go to state 30
+    ','  shift, and go to state 31
+
+
+State 24
+
+   14 pares: par •
+
+    $default  reduce using rule 14 (pares)
+
+
+State 25
+
+   17 condicion: ID • '=' valor
+
+    '='  shift, and go to state 32
+
+
+State 26
+
+    9 read: READ ID WHERE condicion •
+
+    $default  reduce using rule 9 (read)
+
+
+State 27
+
+   10 update: UPDATE ID SET pares •
+   11       | UPDATE ID SET pares • WHERE condicion
+   15 pares: pares • ',' par
+
+    WHERE  shift, and go to state 33
+    ','    shift, and go to state 31
+
+    $default  reduce using rule 10 (update)
+
+
+State 28
+
+   13 delete: DELETE ID WHERE condicion •
+
+    $default  reduce using rule 13 (delete)
+
+
+State 29
+
+   16 par: ID ':' • valor
+
+    STRING  shift, and go to state 34
+    NUMBER  shift, and go to state 35
+
+    valor  go to state 36
+
+
+State 30
+
+    7 create: CREATE ID '{' pares '}' •
+
+    $default  reduce using rule 7 (create)
+
+
+State 31
+
+   15 pares: pares ',' • par
+
+    ID  shift, and go to state 22
+
+    par  go to state 37
+
+
+State 32
+
+   17 condicion: ID '=' • valor
+
+    STRING  shift, and go to state 34
+    NUMBER  shift, and go to state 35
+
+    valor  go to state 38
+
+
+State 33
+
+   11 update: UPDATE ID SET pares WHERE • condicion
+
+    ID  shift, and go to state 25
+
+    condicion  go to state 39
+
+
+State 34
+
+   18 valor: STRING •
+
+    $default  reduce using rule 18 (valor)
+
+
+State 35
+
+   19 valor: NUMBER •
+
+    $default  reduce using rule 19 (valor)
+
+
+State 36
+
+   16 par: ID ':' valor •
+
+    $default  reduce using rule 16 (par)
+
+
+State 37
+
+   15 pares: pares ',' par •
+
+    $default  reduce using rule 15 (pares)
+
+
+State 38
+
+   17 condicion: ID '=' valor •
+
+    $default  reduce using rule 17 (condicion)
+
+
+State 39
+
+   11 update: UPDATE ID SET pares WHERE condicion •
+
+    $default  reduce using rule 11 (update)
