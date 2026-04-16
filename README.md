@@ -141,7 +141,8 @@ Resultado:
 Cadena válida
 ```
 
----
+<img width="1462" height="379" alt="image" src="https://github.com/user-attachments/assets/153b78d7-6aa6-46d1-b338-1b4d9c261fb7" />
+
 
 ## Conclusión
 
