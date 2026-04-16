@@ -64,7 +64,8 @@ READ usuarios WHERE edad=20;
 
 Y valida si son correctas según la gramática.
 
----
+<img width="466" height="410" alt="image" src="https://github.com/user-attachments/assets/6f28a1c3-79f3-4ecf-84c0-8bf7157b3099" />
+
 
 ## Punto 3: Ambigüedad en if-then-else
 
