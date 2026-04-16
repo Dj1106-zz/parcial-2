@@ -37,7 +37,7 @@ Valor -> STRING
 
 Esta gramática permite trabajar con datos tipo clave-valor y usar condiciones mediante la cláusula WHERE.
 
----
+
 
 ## Punto 2: Implementación con Bison y Flex
 
@@ -48,12 +48,12 @@ Se implementó la gramática utilizando herramientas de análisis léxico y sint
 
 ### Pasos de ejecución:
 
-```
+
 bison -d parser.y
 flex lexer.l
 gcc lex.yy.c parser.tab.c -lfl -o parser
 ./parser
-```
+
 
 El programa permite ingresar instrucciones como:
 
