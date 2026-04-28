@@ -69,19 +69,49 @@ Y valida si son correctas según la gramática.
 
 ## Punto 3: Ambigüedad en if-then-else
 
-La gramática original presenta ambigüedad debido al problema del "dangling else".
+En este punto se analiza un problema clásico de las gramáticas en lenguajes de programación, conocido como el “dangling else”, que ocurre cuando no es claro a qué if pertenece un else.
 
-Ejemplo ambiguo:
+La gramática original es:
 
-```
-if E1 then if E2 then S1 else S2
-```
+prop -> if expr then prop
+     | prop_emparejada
 
-No es claro a qué `if` pertenece el `else`.
+prop_emparejada -> if expr then prop_emparejada else prop
+                | otras
+ Problema de ambigüedad
 
-### Solución (gramática no ambigua):
+El problema aparece cuando se tienen if anidados. Por ejemplo:
 
-```
+if Messi then if Goku then atacar else defender
+
+Esta expresión puede interpretarse de dos formas diferentes:
+
+ Interpretación 1 (else con el if más cercano)
+if Messi then (if Goku then atacar else defender)
+
+Paso a paso:
+
+Se evalúa si Messi es verdadero
+Si lo es, se entra al segundo if
+Si Goku es verdadero → atacar
+Si no → defender
+ Interpretación 2 (else con el primer if)
+(if Messi then (if Goku then atacar)) else defender
+
+Paso a paso:
+
+Se evalúa si Messi es verdadero
+Si lo es, se evalúa el segundo if:
+Si Goku es verdadero → atacar
+Si Messi es falso → defender
+ Conclusión
+
+La misma expresión tiene dos interpretaciones distintas, lo que demuestra que la gramática es ambigua.
+
+Solución (gramática no ambigua)
+
+Para eliminar la ambigüedad, se separan las producciones en emparejadas y no emparejadas:
+
 prop -> prop_emparejada | prop_no_emparejada
 
 prop_emparejada -> if expr then prop_emparejada else prop_emparejada
@@ -89,11 +119,69 @@ prop_emparejada -> if expr then prop_emparejada else prop_emparejada
 
 prop_no_emparejada -> if expr then prop
                     | if expr then prop_emparejada else prop_no_emparejada
-```
+ Ejemplo ya sin ambigüedad
 
-Esta solución asegura que el `else` se asocie al `if` más cercano.
+Tomando nuevamente:
 
+if Messi then if Goku then atacar else defender
 
+Ahora solo se puede interpretar así:
+
+if Messi then (if Goku then atacar else defender)
+
+Paso a paso:
+
+El else se asocia automáticamente con el if más cercano (Goku)
+El if de Messi queda sin else
+Solo existe una interpretación válida
+ Explicación final
+
+El problema del dangling else se resuelve asegurando que cada else se asocie con el if más cercano, eliminando cualquier ambigüedad en la gramática.
+Árbol 1 (else con Goku → el más cercano)
+        if
+       / | \
+   Messi then   if
+               / | \
+           Goku then else
+           /     \     \
+       atacar   defender
+ Interpretación paso a paso:
+Se evalúa Messi
+Si es verdadero → se evalúa Goku
+Si Goku es verdadero → atacar
+Si no → defender
+ Árbol 2 (else con Messi)
+           if
+         /  |   \
+     Messi then  else
+           |       \
+           if     defender
+         /  |  \
+     Goku then atacar
+ Interpretación paso a paso:
+Se evalúa Messi
+Si es verdadero → evalúa Goku → atacar si es true
+Si Messi es falso → defender
+ Problema
+
+La misma expresión genera dos árboles distintos, por lo tanto la gramática es ambigua.
+
+ Solución (gramática no ambigua)
+prop -> prop_emparejada | prop_no_emparejada
+
+prop_emparejada -> if expr then prop_emparejada else prop_emparejada
+                | otras
+
+prop_no_emparejada -> if expr then prop
+                    | if expr then prop_emparejada else prop_no_emparejada
+ Árbol único (ya sin ambigüedad)
+        if
+       / | \
+   Messi then   if
+               / | \
+           Goku then else
+           /     \     \
+       atacar   defender
 
 ## Punto 4: Parser CYK
 
